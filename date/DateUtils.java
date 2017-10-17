@@ -11,10 +11,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-/**
- * @author wangyan
- * @date 2014-11-02 16:41
- */
 public final class DateUtils extends org.apache.commons.lang.time.DateUtils {
 
     /**
