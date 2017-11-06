@@ -25,3 +25,6 @@
 
 ## 统一配置
 用于统一配置spring文件
+
+## rocket-mq
+用于处理rocketmq消息堆积
