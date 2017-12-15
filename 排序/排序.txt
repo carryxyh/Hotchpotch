@@ -1,0 +1,282 @@
+要被排序的数组都是 int[] a = new int[...];
+	
+交换两个数字位置的方法
+void exch(int i,int j){
+	//交换i，j位置上的数
+	int temp = a[j];
+	a[j] = a[j - 1];
+	a[j - 1] = temp;
+}
+
+所有排好序的数组按照升序（小到大）排列！
+
+1.插入排序。
+	主要思想：跟打扑克一样，一开始手里没有牌，摸到一张牌，跟现在手里的牌比较，选择一个合适的位置插入
+	核心代码：
+		for(int i=0;i<a.length;i++){
+
+			for(int j=i;j>0;j--){
+
+				//如果这个数比之前的数小，交换顺序
+				if(a[j] < a[j-1]){
+					exch(j,j - 1);
+				}
+
+			}
+
+		}
+
+2.优化插入排序
+	主要思想同上，但是做了优化，使用右移而不是交换位置。好处是，交换位置使用了一个temp的空间,而且每一次循环就可能会产生好多temp
+	核心代码：
+		for(int i=0;i<a.length;i++){
+
+			//自己思考一下，为什么要用temp来保存a[i]变量
+			int temp = a[i];
+			int j;
+			//注意这里是i - 1，i的位置上就是temp,如果这之前的值比temp大，就后移，如果小，跳出循环
+			for(j=i - 1;j>0;j--){
+				
+				if(a[j] > temp){
+					//右移
+					a[j + 1] = a[j];
+				}else{
+					break;
+				}
+
+			}
+			//移动完成后，把temp放到相应的位置上去
+			//思考为什么是j + 1 = temp
+			a[j + 1] = temp;
+
+		}
+
+3.选择排序（相当于冒泡）
+	主要思想：比较这个位置后面的每一个数，找到后面所有数中最小的数，如果没有，这个数往后最小的就是自己
+	核心代码：
+		for(int i=0;i<a.length;i++){
+
+			//最小元素的索引
+			int minIndex = i;
+			for(int j=i;j<a.length;j++){
+				if(a[minIndex] > a[j]){
+					minIndex = j;
+				}
+			}
+
+			//最小的元素索引是 minIndex
+			exch(i,minIndex);
+
+			//每次循环，就会把当前位置靠后最小的值放到这个位置上来
+		}
+
+4.希尔排序
+	主要思想：分而治之的思想，一言难尽，一般也不会让写，是排序中唯一一个很难确定时间复杂度的算法
+
+5.快速排序
+	主要思想：切分以及递归
+	切分：选取一个切分元素，这个元素就是标准，一般是一段中的第一个元素。从前（坐标i）从后（用j）找，从前面找一个比切分元素大的（叫A），再从后面找，找一个比切分元素小的（叫B），交换A和B，用无限循环来做循环，直到 i >= j时结束，把切分元素放到j的位置上去。注意，要用j不能用i。思考为什么
+
+	这样一次排序，就能保证，切分元素左边的都比切分元素小，右边的都比切分元素大
+
+	然后再递归左边，右边，直到结束
+
+	切分代码：
+		//返回值说明：返回的是切分元素的位置  比如  2  1  3  1  第一次切分之后为   1  1  2  3 返回2   
+		int partition(int[] a, int low, int heigh){
+
+			int i = low;
+			int j = heigh;
+
+			int x = a[low];
+
+			//无限循环
+			for(;;){
+
+				//从左边开始找
+				for(;;){
+
+					//如果不判断会出错 越界
+					if(i == heigh){
+						break;
+					}
+
+					if(a[i] > x){
+						break;
+					}else{
+						i++;
+					}
+				}
+
+				//从右边开始找
+				for(;;){
+
+					if(j == low){
+						break;
+					}
+
+					if(a[j] < x){
+						break;
+					}else{
+						j--;
+					}
+
+				}
+
+				// 当i >= j时，跳出循环
+				if (i >= j) {
+					break;
+				} else {
+					exch(i,j);
+				}
+			}
+
+			//这里不能用i，要用j，思考一个数组  3  5  6  1  2 如果用i会变成 6  2  1  3  5 用j是1  2  3  6  5
+			exch(low,j);
+			return j;
+		}
+
+		更简洁的代码实现方式（书上的，上面是自己写的）：
+		int partitionBeautifull(int[] a, int low, int heigh) {
+
+			int i = low;
+			//注意这里是 heigh + 1,因为下面用的是a[--j]的形式
+			int j = heigh + 1;
+
+			int x = a[low];
+
+			for (;;) {
+
+				while (a[++i] < x) {
+					if (i == heigh) {
+						break;
+					}
+				}
+
+				while (a[--j] > x) {
+					if (j == low) {
+						break;
+					}
+				}
+
+				// 当i >= j时，跳出循环
+				if (i >= j) {
+					break;
+				}
+
+				// 交换i j位置元素
+				int temp = a[j];
+				a[j] = a[i];
+				a[i] = temp;
+			}
+
+			// 交换a[low] 和 a[j]
+			exch(low,j);
+			return j;
+		}
+
+	总代码：
+	void sort(int[] a){
+		sort(a,0,a.length - 1);
+	}
+
+	//low 开始的位置！注意是位置  heigh结束的位置
+	void sort(int[] a, int low, int heigh) {
+		if (heigh <= low) {
+			return;
+		}
+
+		int part = partition(a, low, heigh); // 切分
+		sort(a, low, part - 1);// 左半边排序
+		sort(a, part + 1, heigh);// 右半边排序
+	}
+
+6.归并排序
+	主要思想：把一个数组分成两份，左半边（A）和右半边（B）。幻想成扑克牌，左手一堆右手一堆，左右手都是排好序的，那么，从左右各取一张，如果左边大那么把右边放到桌子上，反过来放右边那张。如果左边用完了，直接放右边的，反过来一样。这样就把两堆排好序的合成了一个大的排好序的数组了
+
+	根据以上思想，要使用递归。
+
+	核心代码：
+		merge部分:
+		void merge(int[] a,int low,int mid,int heigh){
+
+			int[] temp = new int[a.length];
+
+			for (int i = low; i <= heigh; i++) {
+				temp[i] = a[i];
+			}
+
+			int j = mid + 1;
+			int i = low;
+
+			for(int k = low;k <= heigh;k++){
+
+				if(i > mid){
+
+					//左半边用完了
+					a[k] = temp[j];
+					j++;
+				}else if(j > heigh){
+
+					//右半边用完了
+					a[k] = temp[i];
+					i++;
+				}else if(temp[i] > temp[j]){
+
+					//左半边比右半边大
+					a[k] = temp[j];
+					j++;
+				}else if(temp[i] < temp[j]){
+
+					//左半边比右半边小
+					a[k] = temp[i];
+					i++;
+				}
+			}
+		}
+
+	总代码：
+		void sort(int[] a){
+			sort(a, 0, a.length - 1);
+		}	
+
+		void sort(int[] a, int low, int heigh){
+
+			if(low >= heigh){
+				return;
+			}
+
+			int mid = low + (heigh - low) / 2;
+			sort(a, low, mid);	//给左半边排序
+			sort(a, mid + 1, heigh);	//给右半边排序
+			merge(a, low, mid, heigh);	//归并
+		}
+
+	以上递归是从大到小的方式，先把数组分两半，取一半再排。。以此类推。
+	还有一种递归方式是从小开始：
+		比如 [1 ,2 , 3, 4]	
+	先merge [1 ,2]
+	再merge[3, 4]
+	再把二者再merge，形成排好序的数组
+
+	总代码:
+		void sort(int[] a){
+
+			int N = a.length;
+
+			//先排两个，再排四个，再排八个
+			for(int size = 1;size < N; size = size + size){
+
+				//以二倍的size为增量递增，如size = 1时，先排 0 - 1 再排2 - 3。。。
+				for(int low = 0;low < N - size;low = low + size + size){
+					//为什么减一自己思考
+					merge(a, low , low + size - 1, Math.min(N - 1, low + size + size - 1));
+				}
+
+			}
+		}
+
+	以上为两种归并排序的写法
+
+7.堆排序
+	主要借助了堆的概念，可以网上找一下实现
