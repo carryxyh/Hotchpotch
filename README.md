@@ -43,3 +43,6 @@ tcp/ip学习笔记
 
 ## batch
 批次任务执行工具。应用场景为：单台JVM中，需要多线程处理List数据（只能是List，因为List有分片方法）
+
+## class
+处理class的工具类
