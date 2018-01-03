@@ -4,13 +4,6 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
-/**
- * DefaultExceptionHandler
- * 默认异常处理器
- *
- * @author 修宇航 [xiuyuhang@corp.netease.com]
- * @since 2017-12-15
- */
 public class DefaultExceptionHandler implements ExceptionHandler {
 
     @Override

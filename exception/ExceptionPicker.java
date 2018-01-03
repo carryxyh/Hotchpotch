@@ -2,12 +2,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 
-/**
- * ExceptionPicker
- *
- * @author 修宇航 [xiuyuhang@corp.netease.com]
- * @since 2017-12-09
- */
 public final class ExceptionPicker {
 
     /**

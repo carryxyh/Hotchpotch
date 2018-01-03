@@ -2,13 +2,6 @@ package com.netease.music.musician.batch;
 
 import java.util.List;
 
-/**
- * ExceptionHandler
- * 异常处理器
- *
- * @author 修宇航 [xiuyuhang@corp.netease.com]
- * @since 2017-12-15
- */
 public interface ExceptionHandler {
 
     /**

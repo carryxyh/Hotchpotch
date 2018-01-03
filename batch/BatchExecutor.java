@@ -7,12 +7,6 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-/**
- * BatchExecutor
- *
- * @author 修宇航 [xiuyuhang@corp.netease.com]
- * @since 2017-11-23
- */
 public final class BatchExecutor {
 
     /**
