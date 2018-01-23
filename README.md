@@ -30,7 +30,7 @@
 用于处理rocketmq消息堆积
 
 ## exception
-用于从异常堆栈中，找出特定的包名前缀的异常，过滤切面、spring框架等的堆栈信息
+ExceptionPicker工具类：用于从异常堆栈中，找出特定的包名前缀的异常，过滤切面、spring框架等的堆栈信息
 
 ## tcp
 tcp/ip学习笔记
