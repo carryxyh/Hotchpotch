@@ -30,9 +30,9 @@ public final class ExceptionPicker {
     public static final String ASPECT_AROUND = ".aspect.";
 
     /**
-     * 音乐人包前缀
+     * 包名前缀 注意替换
      */
-    public static final String PACKAGE_MUSIC = "com.netease.music";
+    public static final String PACKAGE_MUSIC = "com.XXXX";
 
     public static String pick(HttpServletRequest request, Exception ex) {
         StringBuilder contentBuilder = new StringBuilder();
