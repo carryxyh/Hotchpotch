@@ -31,6 +31,8 @@
 
 ## exception
 ExceptionPicker工具类：用于从异常堆栈中，找出特定的包名前缀的异常，过滤切面、spring框架等的堆栈信息
+ExceptionParser工具类：用于处理异常堆栈，相比于ExceptionPicker，Parser返回的仍然是一个Throwable，在某些业务场景（比如：Logger.error(msg,throwable)中，如果传入的是异常，则在LogEvent中可以获取到这个Thrown信息，从而更好地对LogEvent进行二次开发），更适合返回异常类型而不是string。
+ExceptionCenter：Picker和Parser的最佳实践
 
 ## tcp
 tcp/ip学习笔记
